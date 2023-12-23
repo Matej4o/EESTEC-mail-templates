@@ -1,0 +1,166 @@
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head> 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<body>
+  <button id="copyButton" style="position: fixed; top: 10px; right: 10px;">Copy</button>
+
+  <table class="eestecred">
+    <thead>
+      <tr>
+        <th class="heading" translate="no">
+        <h1 contenteditable="true">WEEKLY NEWS</h1>
+          </th></tr> 
+
+    </thead>
+
+
+    <tbody>
+      <tr>
+        <td class="eventtxt">
+          <div id="editor">Paste your paragraph here. Click on it to format it, and click anywhere else or copy to close the editor. You can only embed photos in gmail.</div>          
+          <div style="text-align: center;"><h1 style="font-size:40px;margin:0;">Weekly News</h1><h5 style="margin:0;color:black">️💜️ Brought to you by ur CP </h3><br></div>
+          </td>
+      </tr>
+
+<tr>
+<td translate="no">
+</td>
+    </tbody>
+
+    <tfoot class="footer" translate="no">
+      <tr><td style="padding:20px">
+        <span style="float:left;">
+          <p style="font-size:0.8rem;">EESTEC LC SKOPJE<br></p>
+          <p style="font-size:0.6rem;letter-spacing: 0.05em;"><i>Rugjer Boshkovikj bb 1000<br>
+            skopje.lc@gmail.com</i></p><br>
+            <a class="credit"  href="https://github.com/KristinaMladenova/EESTEC-mail-template">Template developed by Linv & Matej.</a>
+</span>
+        <span style="text-align: right;">
+          <h3>POWER YOUR FUTURE,<br>
+            BE AN EESTECER</h3><br>
+          </span>
+      </td></tr>
+    </tfoot>
+  </table>
+
+
+
+<!--Scripts-->
+<script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
+  <script>
+    var quill = new Quill('#editor', {
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['link', 'image'],
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+          [{ 'script': 'sub' }, { 'script': 'super' }],
+          [{ 'indent': '-1' }, { 'indent': '+1' }],
+          [{ 'direction': 'rtl' }],
+          [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'font': [] }],
+          [{ 'align': [] }],
+          ['clean']
+        ]
+      },
+      theme: 'snow'
+    });
+
+    var editorDiv = document.getElementById("editor");
+    var editorContainer = document.querySelector(".ql-toolbar");
+
+    // Add event listener to hide Quill editor when clicked outside of editor div
+    document.addEventListener("click", function(event) {
+      if (!editorDiv.contains(event.target) && !editorContainer.contains(event.target)) {
+        editorContainer.style.display = "none";
+      }
+    });
+
+    // Add event listener to show Quill editor when editor div is clicked
+    editorDiv.addEventListener("click", function() {
+      editorContainer.style.display = "block";
+      quill.focus();
+    });
+  </script>
+
+
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script language="JavaScript">
+
+  
+
+//copyButton does ctrl A and then ctrl C to copy the whole table
+  const copyButton = document.getElementById("copyButton");
+  copyButton.addEventListener("click", function() {
+    //hides the quill editor
+    document.querySelector(".ql-toolbar").style.display = "none";
+    copyButton.style.display = "none";
+
+    //copies to clipboard
+    const range = document.createRange();
+    range.selectNode(document.querySelector("body"));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();
+    
+    setTimeout(function() {
+      copyButton.style.display = "block";
+    }, 1000);
+  });
+  
+
+  const customURL = document.getElementById("button");
+  customURL.addEventListener("keydown", debounce(swapLink, 1000));
+
+  function swapLink() {
+    let text = customURL.innerText;
+    let link = `<a href='${text}'>;АПЛИЦИРАЈТЕ НА ПОВИКОТ</a>`;
+    text = text.replace(text, link);
+    customURL.innerHTML = text;
+
+  }
+
+
+  // /*Ако додаваш параграфи на кои што ќе користиш линкови, додај: 
+  //   id="content-text" 
+  //   и со користење @текст(url) во текстот во browser можеш да додавај линкови
+  //   */
+
+  // // Debounce function
+  // function debounce(func, wait) {
+  //   let timeout;
+  //   return function (...args) {
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(() => {
+  //       func.apply(this, args);
+  //     }, wait);
+  //   };
+  // }
+
+  // // keydown event listener
+
+  // const contentEditable = document.getElementById("content-text");
+  // contentEditable.addEventListener("keydown", debounce(handleKeydown, 500));
+
+  // function handleKeydown() {
+  //   let text = contentEditable.innerText;
+  //   let regex = /@(.*?)\((.*?)\)/g;
+  //   let match = regex.exec(text);
+  //   if (match) {
+  //     let linkText = match[1];
+  //     let linkUrl = match[2];
+  //     let link = `<a href='${linkUrl}'>${linkText}</a>`;
+  //     text = text.replace(match[0], link);
+  //     contentEditable.innerHTML = text;
+  //   }
+  // }
+</script>
+</body>
